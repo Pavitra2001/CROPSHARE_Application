@@ -9,7 +9,7 @@ $pw = "";
 $address = "";
 $city = "";
 $phone = "";
-$state = "";
+$code = "";
 $error = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   $pw = $_POST['password'];
   $address = $_POST['address'];
   $city = $_POST['city'];
-  $state = $_POST['state'];
+  $code = $_POST['code'];
   $phone = $_POST['phone'];
 
   if ($db_found) {
@@ -34,8 +34,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
 		else {
       $phash = password_hash($pw, PASSWORD_DEFAULT);// encrypt password
-			$SQL = $db_found->prepare("INSERT INTO user (name, email, password, address, city, state, phone) VALUES ( ?, ?, ?, ?, ?, ?, ?)");
-			$SQL->bind_param('sssssss', $name, $email, $phash ,$address, $city, $state, $phone);
+			$SQL = $db_found->prepare("INSERT INTO user (name, email, password, address, city, zipcode, phone) VALUES ( ?, ?, ?, ?, ?, ?, ?)");
+			$SQL->bind_param('sssssss', $name, $email, $phash ,$address, $city, $code, $phone);
       $SQL->execute();
       
 			header ("Location: login.php");//to login page
@@ -78,50 +78,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <input type="text" name = "name" placeholder="Enter your name" required>
           </div>
           <div class="input-box">
-            <span class="details">Phone Number</span>
-            <input type="text" name = "phone" placeholder="Enter your number" required>
+            <span class="details">Phone Number (*only 10 digits and no '-')</span>
+            <input type="tel" pattern="[0-9]{10}" name = "phone" placeholder="Enter your number" required>
           </div>
           <div class="input-box">
             <span class="details">Email</span>
-            <input type="text" name = "email" placeholder="Enter your email" required>
+            <input type="email" name = "email" placeholder="Enter your Email" required>
           </div>
           <div class="input-box">
-            <span class="details">Password</span>
-            <input type="password" name = "password" placeholder="Enter your password" required>
+            <span class="details">Password (minimum length 8)</span>
+            <input type="password" name = "password" minlength="8" maxlength="16" placeholder="Enter your password" required>
           </div>
           <div class="input-box" style="width: 650px;">
             <span class="details"><Address>Address</span>
             <input type="text" name = "address" placeholder="Enter your address" required>
           </div>
           <div class="input-box">
-            <span class="details">State</span>
-            <input type="text" name = "state" placeholder="Enter your state" required>
+            <span class="details">Zip Code</span>
+            <input type="text" name = "code" pattern="[0-9]{5}" placeholder="Enter your zipcode" required>
           </div>
           <div class="input-box">
             <span class="details">City</span>
             <input type="text" name = "city" placeholder="Enter your city" required>
           </div>
         </div>
-        <!-- <div class="gender-details">
-          <input type="radio" name="gender" id="dot-1">
-          <input type="radio" name="gender" id="dot-2">
-          <input type="radio" name="gender" id="dot-3">
-          <span class="gender-title">Gender</span>
-          <div class="category">
-            <label for="dot-1">
-            <span class="dot one"></span>
-            <span class="gender">Male</span>
-          </label>
-          <label for="dot-2">
-            <span class="dot two"></span>
-            <span class="gender">Female</span>
-          </label>
-          <label for="dot-3">
-            <span class="dot three"></span>
-            <span class="gender">Prefer not to say</span>
-            </label>
-          </div>
-        </div> -->
         <div class="button">
           <input type="submit" value="Register">
         </div>

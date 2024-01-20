@@ -75,57 +75,7 @@ include('navbar.php');
                         <div class="col-lg-4 col-12 d-flex align-items-center ms-auto mb-5 mb-lg-4">
                         </div>
                         <?php
-                        if(empty($_GET['search_data'])){
-                            $sql = "SELECT * FROM `items` INNER JOIN user ON items.userID = user.userID";
-                            $result = $db_found-> query($sql);
-                                while($fetch_products=$result->fetch_assoc()) { 
-                            ?>
-                            <div class="col-lg-4 col-md-6 col-12">
-                            <div class="job-thumb job-thumb-box">
-                                <div class="job-image-box-wrap">
-                                    <a href="prodDetail.php?pid=<?php echo $fetch_products['itemID']; ?>">
-                                        <img src="uploaded_img/<?php echo $fetch_products["itemImage"]; ?>"style="width: 480px; height: 400px;" class="job-image img-fluid" alt="marketing assistant">
-                                    </a>
-
-                                    <div class="job-image-box-wrap-info d-flex align-items-center">
-                                        <p class="mb-0">
-                                            <a href="#" class="badge badge-level"><?php echo $fetch_products['category']; ?></a>
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div class="job-body">
-                                    <h4 class="job-title">
-                                        <a href="prodDetail.php?pid=<?php echo $fetch_products['itemID']; ?>" class="job-title-link"><?php echo $fetch_products['itemName']; ?></a>
-                                    </h4>
-
-                                    <div class="d-flex">
-                                        <div class="job-title">
-                                        <p class="detail" style="font-size: 22px; font-weight: 600;"> Donated By: <?php echo $fetch_products['name']; ?></p>
-                                        </div>
-                                    </div>
-
-                                    <div class="d-flex align-items-center">
-                                        <p class="job-location" style="font-size: 17px;">
-                                            <i class="custom-icon bi-geo-alt me-1"></i>
-                                            <?php echo $fetch_products['zipcode']. ', ' . $fetch_products['city'];?> 
-                                        </p>
-                                    </div>
-
-                                    <div class="d-flex align-items-center border-top pt-3">
-                                        <p class="detail" style="font-size: 20px; font-weight: 400;"> Pick Up By <br>
-                                            <i class="custom-icon bi-clock me-1"></i>
-                                            <?php echo $fetch_products['expireDate']; ?>
-                                        </p>
-                                        <input type="hidden" name="product_id" value="<?php echo $fetch_products['itemID']; ?>">
-                                        <a href="prodDetail.php?pid=<?php echo $fetch_products['itemID']; ?>" class="custom-btn btn ms-auto">View</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <?php
-                            }
-                        }elseif(isset($_GET['search_data'])){
+                            if(isset($_GET['search_data'])){
                                 $filter = $_GET['search_data'];
                                 $sql = "SELECT * FROM `items` INNER JOIN user ON items.userID = user.userID WHERE CONCAT(itemName,category, name, city) LIKE '%$filter%'";
                                 $result = $db_found-> query($sql);
@@ -176,9 +126,56 @@ include('navbar.php');
                                     </div>
                                     <?php
                                             }
-                                        } 
-                                        elseif(!isset($_GET['search_data'])){
-                                            echo "No";
+                                        } else{
+                                            $sql = "SELECT * FROM `items` INNER JOIN user ON items.userID = user.userID WHERE items.category = 'Gardening Tools'";
+                                            $result = $db_found-> query($sql);
+                                                while($fetch_products=$result->fetch_assoc()) { 
+                                            ?>
+                                            <div class="col-lg-4 col-md-6 col-12">
+                                            <div class="job-thumb job-thumb-box">
+                                                <div class="job-image-box-wrap">
+                                                    <a href="prodDetail.php?pid=<?php echo $fetch_products['itemID']; ?>">
+                                                        <img src="uploaded_img/<?php echo $fetch_products["itemImage"]; ?>"style="width: 480px; height: 400px;" class="job-image img-fluid" alt="marketing assistant">
+                                                    </a>
+
+                                                    <div class="job-image-box-wrap-info d-flex align-items-center">
+                                                        <p class="mb-0">
+                                                            <a href="#" class="badge badge-level"><?php echo $fetch_products['category']; ?></a>
+                                                        </p>
+                                                    </div>
+                                                </div>
+
+                                                <div class="job-body">
+                                                    <h4 class="job-title">
+                                                        <a href="prodDetail.php?pid=<?php echo $fetch_products['itemID']; ?>" class="job-title-link"><?php echo $fetch_products['itemName']; ?></a>
+                                                    </h4>
+
+                                                    <div class="d-flex">
+                                                        <div class="job-title">
+                                                        <p class="detail" style="font-size: 22px; font-weight: 600;"> Donated By: <?php echo $fetch_products['name']; ?></p>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="d-flex align-items-center">
+                                                        <p class="job-location" style="font-size: 17px;">
+                                                            <i class="custom-icon bi-geo-alt me-1"></i>
+                                                            <?php echo $fetch_products['zipcode']. ', ' . $fetch_products['city'];?> 
+                                                        </p>
+                                                    </div>
+
+                                                    <div class="d-flex align-items-center border-top pt-3">
+                                                        <p class="detail" style="font-size: 20px; font-weight: 400;"> Pick Up By <br>
+                                                            <i class="custom-icon bi-clock me-1"></i>
+                                                            <?php echo $fetch_products['expireDate']; ?>
+                                                        </p>
+                                                        <input type="hidden" name="product_id" value="<?php echo $fetch_products['itemID']; ?>">
+                                                        <a href="prodDetail.php?pid=<?php echo $fetch_products['itemID']; ?>" class="custom-btn btn ms-auto">View</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <?php
+                                            }
                                         }?>
                                         
 

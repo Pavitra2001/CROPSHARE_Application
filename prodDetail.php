@@ -88,7 +88,7 @@ Bootstrap 5 HTML CSS Template
                                 <div class="d-flex flex-wrap align-items-center border-bottom pt-lg-3 pt-2 pb-3 mb-4">
                                     <p class="job-location mb-0">
                                         <i class="custom-icon bi-geo-alt me-1"></i>
-                                        <?php echo $fetch_products['city']. ', ' . $fetch_products['state'];?>
+                                        <?php echo $fetch_products['zipcode']. ', ' . $fetch_products['city'];?>
                                     </p>
 
                                     <div class="d-flex">
@@ -135,7 +135,7 @@ Bootstrap 5 HTML CSS Template
                                 </div>
                                 <div class="d-flex justify-content-center flex-wrap mt-5 border-top pt-4">
                                     <a href="#" class="custom-btn btn mt-2">Message <?php echo $fetch_products["name"]; ?></a>
-                                    <a href="#" class="custom-btn custom-border-btn btn mt-2 ms-lg-4 ms-3">Confirm Order</a>
+                                    <a href="confirmOrder.php" class="custom-btn custom-border-btn btn mt-2 ms-lg-4 ms-3">Confirm Order</a>
                                 </div>
                             </div>
                         </div>

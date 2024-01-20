@@ -42,17 +42,16 @@ include('navbar.php');
                 <div class="container">
                     <div class="row">
 
-                        <div class="col-lg-6 col-12 mb-5 mb-lg-0">
-                            <div class="hero-section-text mt-5">
-                                <h6 class="text-white">Are you looking for a platform to share surplus crops?</h6>
+                        <div class="col-12" style="height: 200px;">
+                            <div class="hero-section-text">
+                                <h4 class="text-white" style="font-size: 20px; text-align: center; display: block;">Are you looking for a platform to share surplus crops?</h6>
 
-                                <h1 class="hero-title text-white mt-4 mb-4">Online Crop Sharing Platform. <br>Grow, Share, Sustain</h1>
-
-                                <a href="#categories-section" class="custom-btn custom-border-btn btn">Browse Categories</a>
+                                <h1 class="hero-title text-white" style="font-size: 50px; text-align: center; display: block;">"CropShare, The Online Crop Sharing Platform"</h1>
+                                <h3 class="hero-title text-white" style="font-style: italic; text-align: center; display: block;">- Grow . Share . Sustain -</h5>
                             </div>
                         </div>
 
-                        <div class="col-lg-6 col-12">
+                        <!-- <div class="col-lg-6 col-12">
                             <form class="custom-form hero-form" action="#" method="get" role="form">
                                 <h3 class="text-white mb-3">Search any items</h3>
 
@@ -74,22 +73,21 @@ include('navbar.php');
                                     </div>
 
                                     <div class="col-lg-12 col-12">
-                                        <button type="submit" class="form-control">
+                                        <button type="submit" class="form-control" style="height: 50px;">
                                             Find items
                                         </button>
                                     </div>
                                 </div>
                             </form>
-                        </div>
+                        </div> -->
 
                     </div>
                 </div>
             </section>
 
-
- <?php include('browseCategory.php'); ?>
-
-<?php include('featuredItems.php'); ?>
+            <section class="job-section job-featured-section section-padding" id="job-section">
+            </div>
+            </section>
 
             <section>
                 <div class="container">

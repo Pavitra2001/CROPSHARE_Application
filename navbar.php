@@ -33,10 +33,6 @@
                             <a class="nav-link" href="3">Blog</a>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="contact.html">Inbox</a>
-                        </li>
-
                         <?php
                             if(isset($_SESSION['user'])) {
                                 $SQL = $db_found->prepare('SELECT * FROM user WHERE userID = ?');//verify username
@@ -49,6 +45,7 @@
                                     
                                     echo 
                                     '
+                                    <li><a class="nav-link" href="#">Messages</a></li>
                                     <li><a class="nav-link" href="#">Dashboard</a></li>
                                     <li><a class="nav-link" href="addProd.php">Donate</a></li>
                                     <li><a class="nav-link custom-btn btn" style="font-size: 20px; margin-left: 50px">' . $row['name'] . '</a><li>
