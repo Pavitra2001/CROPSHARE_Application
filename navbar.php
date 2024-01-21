@@ -30,7 +30,7 @@
 
                         
                         <li class="nav-item">
-                            <a class="nav-link" href="3">Blog</a>
+                            <a class="nav-link" href="#">Blog</a>
                         </li>
 
                         <?php
@@ -46,7 +46,7 @@
                                     echo 
                                     '
                                     <li><a class="nav-link" href="#">Messages</a></li>
-                                    <li><a class="nav-link" href="#">Dashboard</a></li>
+                                    <li><a class="nav-link" href="dashboard.php">Dashboard</a></li>
                                     <li><a class="nav-link" href="addProd.php">Donate</a></li>
                                     <li><a class="nav-link custom-btn btn" style="font-size: 20px; margin-left: 50px">' . $row['name'] . '</a><li>
                                     <li><a href="logout.php"> <i class="fa fa-sign-out" style="font-size:24px; margin-left: 30px" ></i></span></a><li>

@@ -1,7 +1,40 @@
 <?php
+//session start
 session_start();
-include('configure.php');
+include('configure.php'); 
 include('navbar.php');
+
+if (!isset($_SESSION['user'])) {
+    header ("Location: login.php");
+    } else{
+
+        $Userid = "";
+        $Itemid = "";
+        $todayDate = "";
+        $pickUpDate = "";
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+
+            $Userid = $_SESSION['user'];
+            $todayDate = date('Y-m-d');
+            $Itemid = $_POST['item_ID'];
+            $pickUpDate = $_POST['pickUp'];
+
+            if ($db_found) {
+                $Userid = $_SESSION['user'];
+                $SQL = $db_found->prepare("INSERT INTO `order` (itemID, userID, pickUpDate, orderedDate) VALUES ( ?, ?, ?, ?)");
+                $SQL->bind_param('ssss', $Itemid, $Userid, $pickUpDate, $todayDate);
+                $SQL->execute();
+
+                echo             
+                "<script>
+                alert('Your order have been successfuly placed! Thank you for saving the world');
+                </script>";
+  
+                header ("Location: dashboard.php");
+                }
+        }
+    }
 ?>
 
 <!doctype html>
@@ -13,7 +46,7 @@ include('navbar.php');
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>CropShare Listing</title>
+        <title>CropShare Confirm Order</title>
 
         <!-- CSS FILES -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -52,7 +85,7 @@ include('navbar.php');
                                 <ol class="breadcrumb justify-content-center">
                                     <li class="breadcrumb-item"><a href="prodList.php">Store</a></li>
 
-                                    <li class="breadcrumb-item active" aria-current="page">Order Confirmation</li>
+                                    <li class="breadcrumb-item active" aria-current="page">Confirm Order</li>
                                 </ol>
                             </nav>
                         </div>
@@ -61,71 +94,113 @@ include('navbar.php');
                 </div>
             </header>
 
-            <section class="job-section section-padding">
-                <div class="container">
-                <form action="" method="POST">
+            <!-- Order Section -->
+            <section class="section">
+            <div class="container">
+            <div class="col-lg-4 col-12 mt-5 mt-lg-0" style="padding-top: 20px; padding-left: 15%;display: flex; width: 100%;align-items: center;">
+                
+                    <?php  
+                        if(isset($_GET['pid'])){
+                            $pid = $_GET['pid'];
+                            $select_products = mysqli_query($db_found, "SELECT * FROM `items` INNER JOIN user ON items.userID = user.userID WHERE itemID = '$pid'") or die('query failed');
+                        if(mysqli_num_rows($select_products) > 0){
+                            while($fetch_products = mysqli_fetch_assoc($select_products)){
+                                $expireDate = $fetch_products['expireDate'];
+                                $dateObject = new DateTime($expireDate);
+                                $formattedDate = $dateObject->format('d-m-Y');
 
-<h3>place your order</h3>
+                    ?>
 
-<div class="flex">
-    <div class="inputBox">
-        <span>your name :</span>
-        <input type="text" name="name" placeholder="enter your name">
-    </div>
-    <div class="inputBox">
-        <span>your number :</span>
-        <input type="number" name="number" min="0" placeholder="enter your number">
-    </div>
-    <div class="inputBox">
-        <span>your email :</span>
-        <input type="email" name="email" placeholder="enter your email">
-    </div>
-    <div class="inputBox">
-        <span>payment method :</span>
-        <select name="method">
-            <option value="cash on delivery">cash on delivery</option>
-            <option value="credit card">credit card</option>
-            <option value="paypal">paypal</option>
-            <option value="paytm">paytm</option>
-        </select>
-    </div>
-    <div class="inputBox">
-        <span>address line 01 :</span>
-        <input type="text" name="flat" placeholder="e.g. flat no.">
-    </div>
-    <div class="inputBox">
-        <span>address line 02 :</span>
-        <input type="text" name="street" placeholder="e.g.  streen name">
-    </div>
-    <div class="inputBox">
-        <span>city :</span>
-        <input type="text" name="city" placeholder="e.g. mumbai">
-    </div>
-    <div class="inputBox">
-        <span>state :</span>
-        <input type="text" name="state" placeholder="e.g. maharashtra">
-    </div>
-    <div class="inputBox">
-        <span>country :</span>
-        <input type="text" name="country" placeholder="e.g. india">
-    </div>
-    <div class="inputBox">
-        <span>pin code :</span>
-        <input type="number" min="0" name="pin_code" placeholder="e.g. 123456">
-    </div>
-</div>
+                <form action="confirmOrder.php" method="POST" autocomplete="off">
+                <div class="job-thumb job-thumb-detail-box bg-white shadow-lg" >
+                    <div class="d-flex align-items-center" style="display: flex;justify-content: center;align-items: center;">
+                        <div class="job-image-box-wrap"  style="width: 50%; height: 50%;">
+                            <img src="uploaded_img/<?php echo $fetch_products["itemImage"]; ?>" class="job-image me-3 img-fluid" alt="">
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center flex-wrap mt-5 border-top pt-4">
+                        <h3 class="label">Order Details</h3>
+                    </div>
+                    <div class="row" style="padding-top:20px;">
+                        <div class="d-flex">
+                            <div class="job-title">
+                            <label class="detail" for="item_ID" style="font-size: 24px; font-weight: bold;">Item ID:</label>
+                            <input type="text"class="detail" name="item_ID" style="font-size: 24px; font-weight: bold;" value="<?php echo $fetch_products['itemID']; ?>" readonly><br><br>
+                            
+                            <label class="detail" for="item_Name" style="font-size: 24px; font-weight: bold;">Item Name:</label>
+                            <input type="text"class="detail" name="item_Name" style="font-size: 24px; font-weight: bold;" value="<?php echo $fetch_products['itemName']; ?>" readonly><br><br>
 
-<input type="submit" name="order" value="order now" class="btn">
+                            <label class="detail" for="item_Category" style="font-size: 24px; font-weight: bold;">Category:</label>
+                            <input type="text"class="detail" name="item_Category" style="font-size: 24px; font-weight: bold;" value="<?php echo $fetch_products['category']; ?>" readonly><br><br>
 
-</form>
+                            <label class="detail" for="item_Quantity" style="font-size: 24px; font-weight: bold;">Quantity:</label>
+                            <input type="text"class="detail" name="item_Quantity" style="font-size: 24px; font-weight: bold;" value="<?php echo $fetch_products['quantity']; ?>" readonly><br><br>
 
+                            <label class="detail" for="item_Weight" style="font-size: 24px; font-weight: bold;">Weight:</label>
+                            <input type="text"class="detail" name="item_Weight" style="font-size: 24px; font-weight: bold;" value="<?php echo $fetch_products['weight']; ?>" readonly><br><br>
+
+                            <label class="detail" for="item_ExpireDate" style="font-size: 24px; font-weight: bold;">Best Before:</label>
+                            <input type="text"class="detail" name="item_ExpireDate" style="font-size: 24px; font-weight: bold;" value="<?php echo  $formattedDate; ?>" readonly><br><br>
+
+                            <!-- <p class="detail" name="item_Name" style="font-size: 24px; font-weight: bold;"> Item Name: <?php echo $fetch_products['itemName']; ?></p>
+                            <p class="detail" name="item_Category" style="font-size: 24px; font-weight: bold;"> Item Category: <?php echo $fetch_products['category']; ?></p>
+                            <p class="detail" name="item_Quantity" style="font-size: 24px; font-weight: bold;"> Item Quantity: <?php echo $fetch_products['quantity']; ?></p>
+                            <p class="detail" name="item_Weight" style="font-size: 24px; font-weight: bold;"> Item Weight: <?php echo $fetch_products['weight']; ?> Kg</p>
+                            <p class="detail" name="item_ExpireDate" style="font-size: 24px; font-weight: bold;" required> Suggested Pick Up: <?php echo  $formattedDate; ?></p> -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="padding-top:20px;">
+                        <div class="d-flex">
+                            <div class="job-title">
+                            <label class="detail" for="item_DonorName" style="font-size: 24px; font-weight: bold;">Donor Name:</label>
+                            <input type="text"class="detail" name="item_DonorName" style="font-size: 24px; font-weight: bold;" value="<?php echo $fetch_products['name']; ?>" readonly><br><br>
+                            </div>
+                        </div>
+                        <div class="d-flex">
+                            <label class="detail" for="location" style="font-size: 24px; font-weight: bold;">Location:</label>
+                            <input type="text"class="detail" name="location" style="font-size: 24px; font-weight: bold; width: 100%;" value="<?php echo $fetch_products['address']. ', ' .$fetch_products['zipcode']. ', ' . $fetch_products['city'];?>" readonly><br><br>
+                            </div>
+                        </div>
+
+                        <br>
+                        <br>
+                        <div class="d-flex">
+                            <div class="job-title">
+                            <label class="detail" for="pickUp" style="font-size: 24px; font-weight: bold; color: blue">Select Pick Up Date:</label>
+                            <input type="date"class="detail" name="pickUp" style="font-size: 24px; font-weight: bold;cursor:pointer;" required><br>  
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-center flex-wrap mt-5 border-top pt-4">
+                            <input type="submit" onclick="success()" class="custom-btn custom-border-btn btn mt-2 ms-lg-4 ms-3" value="Confirm Order">
+                        </div>
+                    </div>
                 </div>
-            </section>
+                </form> 
+                <?php
+                    }
+                }else{
+                    echo '<p class="empty">no products details available!</p>';
+                    }
+                }
+                ?>
+            </div>
+            </div>
+        </section>
+
 
 <?php include('footSection.php'); ?>
         </main>
 
 <?php include('footer.php'); ?>
+
+<script>
+	function success() {
+        alert("Your order have been successfuly placed! Thank you for saving the world");
+	}
+</script>
 
         <!-- JAVASCRIPT FILES -->
         <script src="js/jquery.min.js"></script>

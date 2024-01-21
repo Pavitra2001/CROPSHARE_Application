@@ -390,7 +390,7 @@ nav[aria-label="breadcrumb"] {
 
 .custom-btn:hover,
 .navbar-expand-lg .navbar-nav .nav-link.custom-btn:hover {
-  background: var(--secondary-color);
+  background: #f65129;
   color: var(--white-color);
 }
 
