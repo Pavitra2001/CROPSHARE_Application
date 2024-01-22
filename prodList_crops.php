@@ -77,7 +77,9 @@ include('navbar.php');
                         <?php
                             if(isset($_GET['search_data'])){
                                 $filter = $_GET['search_data'];
-                                $sql = "SELECT * FROM `items` INNER JOIN user ON items.userID = user.userID WHERE CONCAT(itemName,category, name, city) LIKE '%$filter%'";
+                                $sql = "SELECT * FROM `items` INNER JOIN user ON items.userID = user.userID 
+                                WHERE (items.status = 'Available')
+                                AND (CONCAT(itemName,category, name, city) LIKE '%$filter%')";
                                 $result = $db_found-> query($sql);
                                     while($fetch_products=$result->fetch_assoc()) {
                                         ?>

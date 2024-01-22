@@ -76,7 +76,7 @@ include('navbar.php');
                         </div>
                         <?php
                         if(empty($_GET['search_data'])){
-                            $sql = "SELECT * FROM `items` INNER JOIN user ON items.userID = user.userID";
+                            $sql = "SELECT * FROM `items` INNER JOIN user ON items.userID = user.userID WHERE items.status = 'Available'";
                             $result = $db_found-> query($sql);
                                 while($fetch_products=$result->fetch_assoc()) { 
                             ?>

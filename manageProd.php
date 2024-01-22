@@ -119,18 +119,18 @@ include('configure.php');
         <div class="col-12 grid-margin stretch-card">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Order Request</h4>
+                    <h4 class="card-title">Product List</h4>
                  
                     <table class="table">
                       <thead>
                         <tr>
-                          <th>Order ID</th>
+                          <th>Item ID</th>
                           <th>Item Name</th>
-                          <th>Category</th> 
-                          <th>User Requested</th>     
-                          <th>Request Location</th>                   
-						  <th>Pick Up Date</th>
-						  <th>Order Status</th>
+                          <th>Category</th>     
+                          <th>Quantity</th>                   
+						              <th>Weight</th>
+                          <th>Best Pick Up Date</th>
+						              <th>Status</th>
                           <th>Action</th>
                         </tr>
                       </thead>
@@ -138,29 +138,29 @@ include('configure.php');
 
                         <?php
                             $Userid = $_SESSION['user'];  
-                            $select_products = mysqli_query($db_found, "SELECT * FROM `order` INNER JOIN items ON items.itemID = order.itemID INNER JOIN user ON order.userID = order.userID WHERE items.userID = '$Userid' GROUP BY order.orderID") or die('query failed');
+                            $select_products = mysqli_query($db_found, "SELECT * FROM items INNER JOIN user ON items.userID = user.userID WHERE items.userID = '$Userid'") or die('query failed');
                             if(mysqli_num_rows($select_products) > 0){
                                 while($fetch_products = mysqli_fetch_assoc($select_products)){
-                                    $pickUpDate = $fetch_products['pickUpDate'];
-                                    $dateObject = new DateTime($pickUpDate);
-                                    $formattedDate = $dateObject->format('d-m-Y');
                         ?>
                         <tr>
-                          <td><?php echo $fetch_products["orderID"]; ?></td>
-                          <td><?php echo $fetch_products["itemName"]; ?></td>
-                          <td><?php echo $fetch_products["category"]; ?></td>
-                          <td><?php echo $fetch_products["name"]; ?></td>
-                          <td><?php echo $fetch_products["city"]; ?></td>
-                          <td><?php echo $formattedDate; ?></td>
-                          <td class="badge badge-gradient-success"><?php echo $fetch_products["orderStatus"]; ?></td>
+                          <td><?php echo $fetch_products["itemID"]; ?></td>
                           <td>
-						    <a href="editOrderRequest.php?oid=<?php echo $fetch_products['orderID']; ?>">Update Status</a>
+                              <img src="uploaded_img/<?php echo $fetch_products["itemImage"]; ?>" class="me-2" alt="image">
+                              <label class="detail"><?php echo $fetch_products["itemName"]; ?></label>
+                            </td>
+                          <td><?php echo $fetch_products["category"]; ?></td>
+                          <td><?php echo $fetch_products["quantity"]; ?></td>
+                          <td><?php echo $fetch_products["weight"]; ?> Kg</td>
+                          <td><?php echo $fetch_products["expireDate"]; ?></td>
+                          <td class="badge badge-gradient-success"><?php echo $fetch_products["status"]; ?></td>
+                          <td>
+						    <a href="updateProd.php?oid=<?php echo $fetch_products['itemID']; ?>">Update</a>
 						  </td>
                         </tr>
                         <?php
                                 }
                             }else{
-                            echo '<p class="empty">No Order Requests!</p>';
+                            echo '<p class="empty">No Items Added!</p>';
                             }
                         ?>
                        

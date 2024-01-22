@@ -36,7 +36,7 @@
               <div class="collapse" id="projects">
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item"> <a class="nav-link" href="addProd.php">Add Products</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="updateProd.php">Update Products</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="manageProd.php">Update Products</a></li>
                 </ul>
               </div>
             </li>
