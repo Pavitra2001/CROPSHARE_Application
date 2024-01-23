@@ -45,7 +45,6 @@
                                     
                                     echo 
                                     '
-                                    <li><a class="nav-link" href="#">Messages</a></li>
                                     <li><a class="nav-link" href="dashboard.php">Dashboard</a></li>
                                     <li><a class="nav-link" href="addProd.php">Donate</a></li>
                                     <li><a class="nav-link custom-btn btn" style="font-size: 20px; margin-left: 50px">' . $row['name'] . '</a><li>

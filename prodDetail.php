@@ -134,7 +134,7 @@ Bootstrap 5 HTML CSS Template
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-center flex-wrap mt-5 border-top pt-4">
-                                    <a href="#" class="custom-btn btn mt-2">Message <?php echo $fetch_products["name"]; ?></a>
+                                    <a href="usersChat.php?user_id=<?php echo $fetch_products['userID']; ?>" class="custom-btn btn mt-2">Message <?php echo $fetch_products["name"]; ?></a>
                                     <a href="confirmOrder.php?pid=<?php echo $fetch_products['itemID']; ?>" class="custom-btn custom-border-btn btn mt-2 ms-lg-4 ms-3">Confirm Order</a>
                                 </div>
                             </div>

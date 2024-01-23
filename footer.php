@@ -50,7 +50,7 @@
 
                             <li class="footer-menu-item"><a href="#" class="footer-menu-link">Store</a></li>
 
-                            <li class="footer-menu-item"><a href="contact.php" class="footer-menu-link">Contact</a></li>
+                            
                         </ul>
                     </div>
 
@@ -58,9 +58,7 @@
                         <h6 class="site-footer-title">Resources</h6>
 
                         <ul class="footer-menu">
-                            <li class="footer-menu-item"><a href="#" class="footer-menu-link">FAQ</a></li>
-
-                            <li class="footer-menu-item"><a href="#" class="footer-menu-link">How it works</a></li>
+                            <li class="footer-menu-item"><a href="contact.php" class="footer-menu-link">Contact</a></li>
                         </ul>
                     </div>
 
