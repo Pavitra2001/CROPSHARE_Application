@@ -50,8 +50,8 @@
               </a>
               <div class="collapse" id="team">
                 <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="#">Add Team</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="#">All Team</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="addBlog.php">Add Blog</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="manageBlog.php">Update Blog</a></li>
                 </ul>
               </div>
             </li>
