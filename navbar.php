@@ -17,11 +17,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav align-items-center ms-lg-5">
                         <li class="nav-item">
-                            <a class="nav-link active" href="index.php">Home</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="about.php">About Us</a>
+                            <a class="nav-link" href="index.php">Home</a>
                         </li>
 
                         <li class="nav-item">
@@ -46,8 +42,9 @@
                                     echo 
                                     '
                                     <li><a class="nav-link" href="dashboard.php">Dashboard</a></li>
-                                    <li><a class="nav-link" href="addProd.php">Donate</a></li>
-                                    <li><a class="nav-link custom-btn btn" style="font-size: 20px; margin-left: 50px">' . $row['name'] . '</a><li>
+                                    <li><a class="nav-link" href="usersChat.php">Inbox</a></li>
+                                    <li><a class="nav-link custom-btn btn" style="background: transparent; border: 2px solid orange; color:orange; margin-left: 40px; margin-right:15px;border: 2px solid orange;border-radius:5px;" href="addProd.php">+ Give Away Items</a></li>
+                                    <li><a class="nav-link custom-btn btn" style="font-size: 20px; margin-left: 50px">Hello, ' . $row['name'] . '</a><li>
                                     <li><a href="logout.php"> <i class="fa fa-sign-out" style="font-size:24px; margin-left: 30px" ></i></span></a><li>
                                     ';
                                     

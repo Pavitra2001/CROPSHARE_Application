@@ -25,6 +25,14 @@ if (!isset($_SESSION['user'])) {
         $date = $_POST['date'];
         $category = $_POST['category'];
 
+         // Validate the date
+         $today = new DateTime();
+         $enteredDate = new DateTime($date);
+ 
+         if ($enteredDate < $today) {
+             echo "<script>alert('Best Before date must not be before today.'); </script>";
+         }else{
+
         if($_FILES["image"]["error"] == 4){
           echo "<script> alert('Image Does Not Exist'); </script>";
         }
@@ -53,19 +61,23 @@ if (!isset($_SESSION['user'])) {
             move_uploaded_file($tmpName, 'uploaded_img/' . $newImageName);
 
             if ($db_found) {
+
+
               $Userid = $_SESSION['user'];
               $SQL = $db_found->prepare("INSERT INTO items (userID, itemName, itemDesc, quantity, weight, category, itemImage, expireDate) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?)");
               $SQL->bind_param('ssssssss', $Userid, $name, $desc, $qty ,$weight, $category, $newImageName, $date);
               $SQL->execute();
 
-              echo
-              "<script> alert('Item Successfully Added');</script>";
-              header ("Location: index.php");
+              echo "<script>
+              alert('Item successfully added, thank you for practising sustainability!');
+              window.location.href = 'prodList.php';
+              </script>";
               }
             }
           }
         }
       }
+    }
 
  ?>
 
@@ -93,7 +105,7 @@ if (!isset($_SESSION['user'])) {
 <body>
   <div class="container">
   <a href="index.php" span class="close" style="font-size:38px;float:right;">&times;</span></a>
-    <div class="title">Donate Now</div>
+    <div class="title">Give Away Items</div>
     <div class="content">
       <form action="addProd.php" method="POST" autocomplete="off" enctype="multipart/form-data">
         <div class="user-details">
@@ -107,7 +119,7 @@ if (!isset($_SESSION['user'])) {
           </div>
           <div class="input-box">
             <span class="details">Best Before/Pick Before</span>
-            <input type="date" autocomplete="off" name = "date" placeholder="Enter your email" required>
+            <input type="date" autocomplete="off" name = "date" required>
           </div>
           <div class="input-box">
             <span class="details">Weight (in Kg)</span>

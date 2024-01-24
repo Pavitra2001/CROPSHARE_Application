@@ -36,8 +36,8 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
     </head>
-<body style="width: 800px; height:800px; background: linear-gradient(135deg, #71b7e6, #9b59b6);">
-  <div class="container" style="margin-left: 1200px; background: white; display: flex;padding: 10px;border-radius: 15px;box-shadow: 0 5px 10px rgba(0,0,0,0.15);height:750px;">
+<body style="width: 800px; background: linear-gradient(135deg, #71b7e6, #9b59b6);">
+  <div class="container" style="margin-top:100px; margin-left: 650px; background: white; display: flex;padding: 10px;border-radius: 15px;box-shadow: 0 5px 10px rgba(0,0,0,0.15);height:750px;">
     <section class="users" style="width: 800px; height:800px;">
       <header>
         <div class="container">
@@ -51,7 +51,7 @@
             <span>You: <?php echo $row['name'];?></span>
           </div>
         </div>
-        <a href="prodList.php?logout_id=<?php echo $row['userID']; ?>" class="logout" >Cancel</a>
+        <a href="index.php?logout_id=<?php echo $row['userID']; ?>" class="logout" >Cancel</a>
       </header>
       <div class="search">
         <span class="text">Select an user to start chat</span>

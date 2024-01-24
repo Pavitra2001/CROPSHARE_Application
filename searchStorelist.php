@@ -26,10 +26,9 @@
                                 <span class="text-white mb-lg-0 mb-md-0 me-2">Browse Categories:</span>
 
                                     <div>
+                                        <a href="prodList.php" class="badge">All</a>
                                         <a href="prodList_crops.php" class="badge">Surplus Crops</a>
-
                                         <a href="prodList_plants.php" class="badge">Plants and Seedlings</a>
-
                                         <a href="prodList_tools.php" class="badge">Gardening Tools</a>
                                     </div>
                                 </div>

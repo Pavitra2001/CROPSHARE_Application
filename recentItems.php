@@ -54,7 +54,7 @@
                                             <?php echo $fetch_products['expireDate']; ?>
                                         </p>
 
-                                        <a href="prodDetail.php?pid=<?php echo $fetch_products['itemID']; ?>" class="custom-btn btn ms-auto">Apply now</a>
+                                        <a href="prodDetail.php?pid=<?php echo $fetch_products['itemID']; ?>" class="custom-btn btn ms-auto">View</a>
                                     </div>
                                 </div>
                             </div>

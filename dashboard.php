@@ -34,80 +34,7 @@ include('configure.php');
         
 </head>
 <!-- navigation bar -->
-
-
-<nav class="navbar navbar-expand-lg">
-            <div class="container">
-                <a class="navbar-brand d-flex align-items-center" href="index.php">
-                    <img src="images/logo.png" class="img-fluid logo-image">
-
-                    <div class="d-flex flex-column">
-                        <strong class="logo-text" style="font-size:30px;">CROPSHARE</strong>
-                         <small class="logo-slogan">Crops Sharing Portal</small>
-                    </div>
-                </a>
-
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav align-items-center ms-lg-5" style="padding-left: 170px;">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="index.php">Home</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="about.php">About Us</a>
-                        </li>
-
-                        <li class="nav-item">
-                        <a class="nav-link" href="prodList.php">Store</a>
-                        </li>
-
-                        
-                        <li class="nav-item">
-                            <a class="nav-link" href="blog.php">Blog</a>
-                        </li>
-
-                        <?php
-                            if(isset($_SESSION['user'])) {
-                                $SQL = $db_found->prepare('SELECT * FROM user WHERE userID = ?');//verify username
-                                $SQL->bind_param('s', $_SESSION['user']);
-                                $SQL->execute();
-                                $result = $SQL->get_result();
-                            
-                                if ($result->num_rows == 1) {
-                                    $row = $result->fetch_assoc();
-                                    
-                                    echo 
-                                    '
-                                    <li><a class="nav-link" href="#">Messages</a></li>
-                                    <li><a class="nav-link" href="dashboard.php">Dashboard</a></li>
-                                    <li><a class="nav-link" href="addProd.php">Donate</a></li>
-                                    <li><a class="nav-link custom-btn btn" style="font-size: 20px; margin-left: 50px; background-color:#f65129;">' . $row['name'] . '</a><li>
-                                    <li><a href="logout.php"> <i class="fa fa-sign-out" style="font-size:24px; margin-left: 30px" ></i></span></a><li>
-                                    ';
-                                    
-                                }else {
-                                    echo 'no row';
-                                }
-                            } else {
-                                
-                                echo '                       
-                                <li class="nav-item ms-lg-auto">
-                                <a class="nav-link" href="registration.php">Register</a>
-                                </li>
-
-                                <li class="nav-item">
-                                <a class="nav-link custom-btn btn" href="login.php">Login</a>
-                                </li>';
-                            }
-                        ?>
-                    </ul>
-                </div>
-            </div>
-        </nav>
+<?php include('navbarDashboard.php');?>
 
 <body>
     <div class="container-scroller">
@@ -117,50 +44,68 @@ include('configure.php');
 	   
             </div>
             <div class="row">
-              <div class="col-md-4 stretch-card grid-margin">
-                <div class="card bg-gradient-danger card-img-holder text-white">
+            <?php include('wasteImpact.php');?>
+            <?php include('totalOrder.php');?>
+            <?php include('surplusUtilization.php');?>
+            </div>
+
+            <!-- Item Give Away -->
+            <div class="row">
+              <div class="col-12 grid-margin">
+                <div class="card">
                   <div class="card-body">
-                    <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Weekly Sales <i class="mdi mdi-chart-line mdi-24px float-right"></i>
-                    </h4>
-                    <h2 class="mb-5">$ 15,0000</h2>
-                    <h6 class="card-text">Increased by 60%</h6>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4 stretch-card grid-margin">
-                <div class="card bg-gradient-info card-img-holder text-white">
-                  <div class="card-body">
-                    <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Weekly Orders <i class="mdi mdi-bookmark-outline mdi-24px float-right"></i>
-                    </h4>
-                    <h2 class="mb-5">45,6334</h2>
-                    <h6 class="card-text">Decreased by 10%</h6>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4 stretch-card grid-margin">
-                <div class="card bg-gradient-success card-img-holder text-white">
-                  <div class="card-body">
-                    <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image" />
-                    <h4 class="font-weight-normal mb-3">Visitors Online <i class="mdi mdi-diamond mdi-24px float-right"></i>
-                    </h4>
-                    <h2 class="mb-5">95,5741</h2>
-                    <h6 class="card-text">Increased by 5%</h6>
+                    <h4 class="card-title">Recent Items Give Away</h4>
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead>
+                          <tr>
+                            <th> Item ID </th>
+                            <th> Item Name </th>
+                            <th> Category </th>
+                            <th> Best Before Date </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        <?php
+                            $Userid = $_SESSION['user'];  
+                            $select_products = mysqli_query($db_found, "SELECT * FROM `items` INNER JOIN user ON items.userID = user.userID WHERE items.userID = '$Userid' ORDER BY items.itemID Desc Limit 5") or die('query failed');
+                            if(mysqli_num_rows($select_products) > 0){
+                                while($fetch_products = mysqli_fetch_assoc($select_products)){
+                            ?>
+                          <tr>
+                            <td> <?php echo $fetch_products["itemID"]; ?> </td>
+                            <td>
+                              <img src="uploaded_img/<?php echo $fetch_products["itemImage"]; ?>" class="me-2" alt="image">
+                              <label class="detail"><?php echo $fetch_products["itemName"]; ?></label>
+                            </td>
+                            <td> <?php echo $fetch_products["category"]; ?> </td>
+                            <td> <?php echo $fetch_products["expireDate"]; ?> </td>
+                          </tr>
+                          <?php
+                                }
+                            }else{
+                            echo '<p class="empty">No items given away!</p>';
+                            }
+                            ?>
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
 
+            <!-- Order History -->
             <div class="row">
               <div class="col-12 grid-margin">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Order History</h4>
+                    <h4 class="card-title">Recent Order History</h4>
                     <div class="table-responsive">
                       <table class="table">
                         <thead>
                           <tr>
+                            <th> Order ID </th>
                             <th> Item Name </th>
                             <th> Category </th>
                             <th> Status </th>
@@ -171,19 +116,28 @@ include('configure.php');
                         <tbody>
                         <?php
                             $Userid = $_SESSION['user'];  
-                            $select_products = mysqli_query($db_found, "SELECT * FROM `order` INNER JOIN items ON items.itemID = order.itemID INNER JOIN user ON order.userID = order.userID WHERE order.userID = '$Userid' GROUP BY order.orderID") or die('query failed');
+                            $select_products = mysqli_query($db_found, "SELECT * FROM `order` INNER JOIN items ON items.itemID = order.itemID INNER JOIN user ON order.userID = order.userID WHERE order.userID = '$Userid' GROUP BY order.orderID ORDER BY order.orderID Desc Limit 5") or die('query failed');
                             if(mysqli_num_rows($select_products) > 0){
                                 while($fetch_products = mysqli_fetch_assoc($select_products)){
                             ?>
                           <tr>
+                            <td> <?php echo $fetch_products["orderID"]; ?> </td>
                             <td>
                               <img src="uploaded_img/<?php echo $fetch_products["itemImage"]; ?>" class="me-2" alt="image">
                               <label class="detail"><?php echo $fetch_products["itemName"]; ?></label>
                             </td>
                             <td> <?php echo $fetch_products["category"]; ?> </td>
-                            <td>
-                              <label class="badge badge-gradient-success"><?php echo $fetch_products["orderStatus"]; ?></label>
-                            </td>
+                            <td> 
+                            <?php 
+                            if ($fetch_products["orderStatus"] == "Completed") {
+                              echo "<span class='badge badge-gradient-success'> Completed</span>";
+                            }elseif ($fetch_products["orderStatus"] == "Reject") {
+                              echo "<span class='badge badge-gradient-danger'> Rejected</span>";
+                            }else{
+                              echo "<span class='badge badge-gradient-info'> Pending</span>";
+                            }
+                            ?>
+                          </td>
                             <td> <?php echo $fetch_products["pickUpDate"]; ?> </td>
                             <td> <?php echo $fetch_products["orderedDate"]; ?> </td>
                           </tr>

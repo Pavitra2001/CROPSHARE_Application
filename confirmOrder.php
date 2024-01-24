@@ -5,36 +5,46 @@ include('configure.php');
 include('navbar.php');
 
 if (!isset($_SESSION['user'])) {
-    header ("Location: login.php");
-    } else{
+    header("Location: login.php");
+} else {
 
-        $Userid = "";
-        $Itemid = "";
-        $todayDate = "";
-        $pickUpDate = "";
+    $Userid = "";
+    $Itemid = "";
+    $todayDate = "";
+    $Itemid = "";
+    $pickUpDate = "";
+    $suggestedDate = "";
 
-        if ($_SERVER['REQUEST_METHOD'] == 'POST'){
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-            $Userid = $_SESSION['user'];
-            $todayDate = date('Y-m-d');
-            $Itemid = $_POST['item_ID'];
-            $pickUpDate = $_POST['pickUp'];
+        $Userid = $_SESSION['user'];
+        $itemID = $_POST['item_ExpireDate'];
+        $todayDate = date('Y-m-d');
+        $Itemid = $_POST['item_ID'];
+        $pickUpDate = $_POST['pickUp'];
+        $suggestedDate = $_POST['item_ExpireDate'];
+        $expireDate = $suggestedDate;
+        $pid = $Itemid;
 
-            if ($db_found) {
-                $Userid = $_SESSION['user'];
-                $SQL = $db_found->prepare("INSERT INTO `order` (itemID, userID, pickUpDate, orderedDate) VALUES ( ?, ?, ?, ?)");
-                $SQL->bind_param('ssss', $Itemid, $Userid, $pickUpDate, $todayDate);
-                $SQL->execute();
+    if (new DateTime($pickUpDate) < new DateTime($expireDate)) {
+        if ($db_found) {
+            $SQL = $db_found->prepare("INSERT INTO `order` (itemID, userID, pickUpDate, orderedDate) VALUES (?, ?, ?, ?)");
+            $SQL->bind_param('ssss', $Itemid, $Userid, $pickUpDate, $todayDate);
+            $SQL->execute();
 
-                echo             
-                "<script>
-                alert('Your order have been successfuly placed! Thank you for saving the world');
-                </script>";
-  
-                header ("Location: dashboard.php");
-                }
+            echo "<script>
+            alert('Order successfully placed, thank you for saving the planet!');
+            window.location.href = 'dashboard.php';
+            </script>";
         }
+    } else {
+        echo "<script>
+        alert('Pick up date cannot be later than suggested date!');
+        window.location.href = 'prodDetail.php?pid=$pid';
+        </script>";
     }
+} 
+}
 ?>
 
 <!doctype html>
@@ -195,12 +205,6 @@ if (!isset($_SESSION['user'])) {
         </main>
 
 <?php include('footer.php'); ?>
-
-<script>
-	function success() {
-        alert("Your order have been successfuly placed! Thank you for saving the world");
-	}
-</script>
 
         <!-- JAVASCRIPT FILES -->
         <script src="js/jquery.min.js"></script>

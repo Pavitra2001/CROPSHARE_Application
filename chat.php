@@ -38,8 +38,8 @@ if(!isset($_SESSION['user'])){
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
     </head>
-    <body style="width: 800px; height:800px; background: linear-gradient(135deg, #71b7e6, #9b59b6);">
-  <div class="container" style="margin-left: 1200px; background: white; display: flex;padding: 10px;border-radius: 15px;box-shadow: 0 5px 10px rgba(0,0,0,0.15);height:750px;">
+    <body style="width: 800px;background: linear-gradient(135deg, #71b7e6, #9b59b6);">
+  <div class="container" style="margin-top:100px; margin-left: 650px;background: white; display: flex;padding: 10px;border-radius: 15px;box-shadow: 0 5px 10px rgba(0,0,0,0.15);height:750px;">
     <section class="users" style="width: 800px; height:800px;">
       <header>
         <?php 

@@ -36,7 +36,7 @@
               <div class="collapse" id="projects">
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item"> <a class="nav-link" href="addProd.php">Add Products</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="manageProd.php">Update Products</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="manageProd.php">All Products</a></li>
                 </ul>
               </div>
             </li>
@@ -44,14 +44,14 @@
 			
 			<li class="nav-item">
               <a class="nav-link" data-bs-toggle="collapse" href="#team" aria-expanded="false" aria-controls="ui-basic">
-                <span class="menu-title">Manage Blog</span>
+                <span class="menu-title">Manage Blogs</span>
                 <i class="menu-arrow"></i>
                
               </a>
               <div class="collapse" id="team">
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item"> <a class="nav-link" href="addBlog.php">Add Blog</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="manageBlog.php">Update Blog</a></li>
+                  <li class="nav-item"> <a class="nav-link" href="manageBlog.php">All Blogs</a></li>
                 </ul>
               </div>
             </li>
